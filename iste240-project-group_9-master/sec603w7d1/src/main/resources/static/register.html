@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Sustainable Advocate License</title>
+
+    <!-- Bootstrap CSS for styling -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery library for easy JavaScript handling -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        /* Center the body contents */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+            background: #f0f7f0; /* Light greenish background */
+            font-family: Arial, sans-serif;
+        }
+
+        /* Styling for the registration container */
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow */
+            text-align: center;
+            width: 300px;
+        }
+
+        /* Style for error messages */
+        .error-message {
+            color: red;
+            visibility: hidden; /* Hidden by default */
+        }
+
+        /* Style for success messages */
+        .success-message {
+            color: green;
+            visibility: hidden; /* Hidden by default */
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Main container for the registration form -->
+<div class="container">
+    <h2>Register</h2>
+
+    <!-- Registration form -->
+    <form id="registerForm">
+        <!-- Username input -->
+        <div class="form-group">
+            <label for="reg-username">Username:</label>
+            <input type="text" class="form-control" id="reg-username" name="username" placeholder="Enter Username">
+        </div>
+
+        <!-- Email input -->
+        <div class="form-group">
+            <label for="reg-email">Email:</label>
+            <input type="email" class="form-control" id="reg-email" name="email" placeholder="Enter Email">
+        </div>
+
+        <!-- Password input -->
+        <div class="form-group">
+            <label for="reg-password">Password:</label>
+            <input type="password" class="form-control" id="reg-password" name="password" placeholder="Enter Password">
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block">Register</button>
+
+        <!-- Error message (hidden initially) -->
+        <p class="error-message" id="register-error">Please fill all fields.</p>
+
+        <!-- Success message (hidden initially) -->
+        <p class="success-message" id="register-success">Registration successful! Redirecting...</p>
+    </form>
+</div>
+
+<script>
+    // Run JavaScript after the document is fully loaded
+    $(document).ready(function () {
+
+        // Listen for form submission
+        $('#registerForm').on('submit', function (e) {
+            e.preventDefault(); // Prevent default form behavior (page refresh)
+
+            // Get user input values
+            const username = $('#reg-username').val();
+            const email = $('#reg-email').val();
+            const password = $('#reg-password').val();
+
+            // Check if any field is empty
+            if (username === "" || email === "" || password === "") {
+                // Show error message if fields are missing
+                $('#register-error').css('visibility', 'visible').text("Please fill in all fields.");
+            } else {
+                // Hide error and show success message
+                $('#register-error').css('visibility', 'hidden');
+                $('#register-success').css('visibility', 'visible').text("Registration successful! Redirecting...");
+
+                // After 1.5 seconds, redirect to learning hub page
+                setTimeout(function () {
+                    window.location.href = "learning-hub.html";
+                }, 1500);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

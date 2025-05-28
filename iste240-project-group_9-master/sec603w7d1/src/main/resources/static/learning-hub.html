@@ -1,0 +1,280 @@
+<!DOCTYPE html> <!-- Tells the browser this is an HTML5 page -->
+<html lang="en"> <!-- Start of the HTML document, language is English -->
+<head>
+    <meta charset="UTF-8"> <!-- Set character encoding -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Make page responsive on mobile -->
+    <title>Green Planet: Teen Sustainability Guide</title> <!-- Page title shown in browser tab -->
+
+    <!-- Bring in jQuery library so we can use it -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        /* CSS to style the page */
+
+        * { margin: 0; padding: 0; box-sizing: border-box; } /* Reset default margins/padding */
+
+        body {
+            font-family: Arial, sans-serif; /* Set font */
+            background-color: #f0f4f8; /* Light background color */
+            color: #333; /* Dark text color */
+            line-height: 1.6; /* Make text easier to read */
+            padding-bottom: 20px; /* Space at bottom */
+        }
+
+        a { color: black; text-decoration: none; } /* Links look like normal text */
+
+        .header-links {
+            background-color: #2ecc71; /* Green background */
+            color: white; /* White text */
+            text-align: center; /* Center align text */
+            padding-bottom: 10px; /* Space below */
+        }
+
+        .search-container {
+            max-width: 500px; /* Search box max size */
+            margin: 15px auto; /* Center horizontally */
+            padding: 0 15px; /* Padding left and right */
+        }
+
+        #search-box {
+            width: 100%; /* Full width */
+            padding: 10px; /* Inside padding */
+            font-size: 1rem; /* Font size */
+            border: 2px solid #2ecc71; /* Green border */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        .category-filters {
+            display: flex; /* Layout buttons side-by-side */
+            justify-content: center; /* Center buttons */
+            flex-wrap: wrap; /* Move to new row if needed */
+            gap: 10px; /* Space between buttons */
+            margin-bottom: 20px; /* Space below */
+        }
+
+        .category-btn {
+            padding: 8px 15px; /* Size of button */
+            background-color: transparent; /* No background */
+            border: 2px solid #2ecc71; /* Green border */
+            color: #2ecc71; /* Green text */
+            border-radius: 20px; /* Rounded button */
+            cursor: pointer; /* Show hand cursor */
+            transition: all 0.3s ease; /* Smooth hover animation */
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background-color: #2ecc71; /* Green background on hover */
+            color: white; /* White text on hover */
+        }
+
+        #article-container {
+            display: grid; /* Use grid layout */
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+            grid-auto-rows: minmax(350px, 1fr); /* Set row height */
+            gap: 20px; /* Space between articles */
+            max-width: 1000px; /* Max size of container */
+            margin: 0 auto; /* Center */
+            padding: 0 15px; /* Padding */
+        }
+
+        .article {
+            background-color: white; /* White background */
+            border: 1px solid #e0e0e0; /* Light gray border */
+            border-radius: 8px; /* Rounded corners */
+            overflow: hidden; /* Hide overflow */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Light shadow */
+            transition: transform 0.3s ease; /* Animate on hover */
+        }
+
+        .article:hover {
+            transform: translateY(-5px); /* Move up on hover */
+        }
+
+        .article img {
+            width: 100%; /* Image full width */
+            height: 200px; /* Fixed height */
+            object-fit: cover; /* Cover the box */
+        }
+
+        .article-content {
+            padding-left: 5px; /* Small left padding */
+            padding-right: 5px; /* Small right padding */
+        }
+
+        .article-title {
+            font-size: 1.2rem; /* Bigger title font */
+            margin-bottom: 10px; /* Space below title */
+            color: #333; /* Dark text */
+        }
+
+        .article-meta {
+            display: flex; /* Side by side */
+            justify-content: space-between; /* Space out items */
+            font-size: 0.9rem; /* Smaller font */
+            color: #666; /* Gray text */
+        }
+
+        .article-category {
+            background-color: #2ecc71; /* Green background */
+            color: white; /* White text */
+            padding: 3px 8px; /* Small padding */
+            border-radius: 15px; /* Rounded tag */
+        }
+
+        .error-message {
+            background-color: #ffdddd; /* Light red background */
+            color: #ff0000; /* Red text */
+            padding: 15px; /* Padding */
+            text-align: center; /* Center the text */
+            margin: 20px 0; /* Top and bottom margin */
+            border-radius: 5px; /* Rounded box */
+        }
+
+        .links {
+            display: flex; /* Make the links side by side */
+            justify-content: center; /* Center links */
+            gap: 20px; /* Space between links */
+            margin-bottom: 10px; /* Space below links */
+            flex-wrap: wrap; /* Allow links to wrap */
+        }
+
+        .links a {
+            background-color: #4CAF50; /* Green button */
+            color: whitesmoke; /* Light text */
+            padding: 5px 10px; /* Padding inside */
+            border-radius: 10px; /* Rounded buttons */
+            font-weight: bold; /* Bold text */
+            transition: all 0.3s ease; /* Smooth hover */
+        }
+
+        .links a:hover {
+            background-color: #27b161; /* Lighter green on hover */
+            color:#45a049; /* Darker green text */
+        }
+
+        @media (max-width: 768px) {
+            #article-container {
+                grid-template-columns: 1fr; /* Stack articles vertically on small screens */
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="header-links">
+    <div class="links">
+        <a href="index.html"><div>Index</div></a> <!-- Link to homepage -->
+        <a href="progress-dashboard.html"><div>Dashboard</div></a> <!-- Link to dashboard -->
+        <a href="/articlenotes"><div>Article Notes</div></a> <!-- Link to article notes page -->
+        <a href="/quiz.html"><div>Quiz</div></a> <!-- Link to quiz page -->
+    </div>
+    <h1>Learning Hub</h1>
+
+</div>
+
+<div class="search-container">
+    <input type="text" id="search-box" placeholder="Search topics that interest you"> <!-- Search box -->
+</div>
+
+<div class="category-filters" id="category-buttons">
+    <button class="category-btn active" data-category="all">All Topics</button> <!-- Filter button: all -->
+    <button class="category-btn" data-category="Climate Change">Climate Change</button> <!-- Filter button: climate -->
+    <button class="category-btn" data-category="Renewable Energy">Green Energy</button> <!-- Filter button: green energy -->
+    <button class="category-btn" data-category="Sustainable Living">Eco-Friendly Living</button> <!-- Filter button: sustainable -->
+</div>
+
+<div id="article-container">
+    <!-- Articles will be added here using JavaScript -->
+</div>
+
+<script>
+    let allArticles = []; // Empty list to store articles
+
+    function loadArticles() {
+        $.ajax({
+            url: 'http://localhost:8080/api/v1/articles', // Where to get articles
+            method: 'GET', // HTTP method
+            success: function(articles) {
+                allArticles = articles; // Save articles
+                displayArticles(articles); // Show them on page
+            },
+            error: function(error) {
+                // If there is an error, show message
+                $('#article-container').html(`
+                    <div class="error-message">
+                        Couldn't load articles.
+                        Make sure the server is running.
+                    </div>
+                `);
+                console.log('Loading error:', error); // Print error in console
+            }
+        });
+    }
+
+    function displayArticles(articlesToShow) {
+        $('#article-container').empty(); // Clear the old articles
+
+        articlesToShow.forEach(function(article) {
+            const articleElement = $(`
+                <a href="#" onclick="openArticle('${article.pdfUrl}')" class="article">
+                    <img src="${article.imageUrl || 'https://picsum.photos/seed/article/400/300'}" alt="${article.title}">
+                    <div class="article-content">
+                        <h2 class="article-title">${article.title}</h2>
+                        <div class="article-meta">
+                            <span class="article-category">${article.category}</span>
+                            <span>${article.readTime} min read</span>
+                        </div>
+                    </div>
+                </a>
+            `);
+
+            $('#article-container').append(articleElement); // Add article to the page
+        });
+    }
+
+    function openArticle(url) {
+        window.open(url, '_blank'); // Open article in a new browser tab
+    }
+
+    function filterArticles(category) {
+        $('.category-btn').removeClass('active'); // Remove active class from all buttons
+        $(event.target).addClass('active'); // Add active class to clicked button
+
+        let filteredArticles;
+        if (category === 'all') {
+            filteredArticles = allArticles; // Show everything
+        } else {
+            filteredArticles = allArticles.filter(function(article) {
+                return article.category === category; // Show matching category
+            });
+        }
+
+        displayArticles(filteredArticles); // Show the filtered articles
+    }
+
+    function searchArticles() {
+        let searchTerm = $('#search-box').val().toLowerCase(); // Get text from search box and make it lowercase
+
+        let filteredArticles = allArticles.filter(function(article) {
+            return article.title.toLowerCase().includes(searchTerm) ||
+                article.category.toLowerCase().includes(searchTerm); // Match title or category
+        });
+
+        displayArticles(filteredArticles); // Show the matching articles
+    }
+
+    $(document).ready(function() {
+        loadArticles(); // Load articles when page is ready
+
+        $('#search-box').on('keyup', searchArticles); // Search while typing
+
+        $('.category-btn').on('click', function() {
+            let category = $(this).attr('data-category'); // Get the category from the button
+            filterArticles(category); // Filter articles
+        });
+    });
+</script>
+
+</body>
+</html>

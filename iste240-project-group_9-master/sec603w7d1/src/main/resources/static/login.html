@@ -1,0 +1,110 @@
+<!DOCTYPE html> <!-- Defines the document type and version of HTML -->
+<html lang="en"> <!-- Starts the HTML page and sets the language to English -->
+<head>
+    <meta charset="UTF-8"> <!-- Sets character encoding to UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes the page responsive on all devices -->
+    <title>Login - Sustainable Advocate License</title> <!-- Sets the title of the web page -->
+
+    <!-- Linking Bootstrap CSS for easier styling -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Adding jQuery library to the project -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style> <!-- Internal CSS for styling -->
+    body {
+        display: flex; /* Centering the container horizontally and vertically */
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Full height of viewport */
+        background: #f0f7f0; /* Light greenish background color */
+        font-family: Arial, sans-serif; /* Font style */
+    }
+    .container {
+        background: white; /* White background for the form box */
+        padding: 20px; /* Inner spacing */
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for a floating effect */
+        text-align: center; /* Center text inside container */
+        width: 300px; /* Width of the form */
+    }
+    .message {
+        margin-top: 10px; /* Space above the message */
+        font-size: 0.9em; /* Smaller font size for messages */
+    }
+    .error-message {
+        color: red; /* Error text in red */
+        visibility: hidden; /* Hidden by default */
+    }
+    .success-message {
+        color: green; /* Success text in green */
+        visibility: hidden; /* Hidden by default */
+    }
+    </style>
+</head>
+
+<body> <!-- Starts the body of the web page -->
+<div class="container"> <!-- A centered container box for the login form -->
+    <h2>Login</h2> <!-- Heading for the form -->
+    <form id="loginForm" method="post" action="/login"> <!-- Form with POST method to /login endpoint -->
+        <div class="form-group"> <!-- Bootstrap class for form styling -->
+            <label for="username">Username:</label> <!-- Label for username field -->
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username"> <!-- Text input field for username -->
+        </div>
+
+        <div class="form-group"> <!-- Another Bootstrap form group -->
+            <label for="password">Password:</label> <!-- Label for password field -->
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password"> <!-- Password input field -->
+        </div>
+
+        <button type="submit" class="btn btn-success btn-block">Login</button> <!-- Submit button with Bootstrap styling -->
+
+        <!-- Hidden error and success messages initially -->
+        <p class="message error-message" id="error-message">Invalid credentials!</p>
+        <p class="message success-message" id="success-message">Login successful! Redirecting...</p>
+    </form>
+</div>
+
+<script> <!-- JavaScript section starts here -->
+$(document).ready(function () { // Runs when the page is fully loaded
+    const urlParams = new URLSearchParams(window.location.search); // Gets URL parameters (example: ?error=invalid)
+
+    if (urlParams.get("error") === "invalid") { // If URL has error=invalid
+        $('#error-message').css('visibility', 'visible').text("Invalid username or password."); // Show error message
+    }
+
+    if (urlParams.get("signup") === "success") { // If URL has signup=success
+        $('#success-message').css('visibility', 'visible').text("Signup successful. Please log in."); // Show success message
+    }
+});
+
+// Handling what happens when the login form is submitted
+$('#loginForm').on('submit', function (e) {
+    e.preventDefault(); // Stops the form from doing its normal submit action (reload)
+
+    const username = $('#username').val(); // Get the username input value
+    const password = $('#password').val(); // Get the password input value
+
+    // check if fields are empty
+    if (username === "" || password === "") {
+        $('#error-message').css('visibility', 'visible').text("Please fill in both fields."); // Show error if empty
+        return; // Stops here if fields are empty
+    }
+
+    // Make an AJAX POST request to /login
+    $.ajax({
+        url: '/login', // URL to send the request to
+        method: 'POST', // Method is POST
+        data: { username: username, password: password }, // Data to send
+        success: function (response) { // If login is successful
+            window.location.href = '/learning-hub.html?username=' + encodeURIComponent(username); // Redirect to learning hub and pass username in URL
+        },
+        error: function (error) { // If login fails
+            window.location.href = '/learning-hub.html?username=' + encodeURIComponent(username);
+        }
+    });
+});
+</script>
+
+</body> <!-- End of body -->
+</html> <!-- End of HTML document -->
+

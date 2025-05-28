@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sustainability Quiz</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+  <!-- jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <!-- Semantic UI JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+  <style>
+    body {
+      background-color: #f8fff8;
+      padding: 20px;
+    }
+    .main-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .header-segment {
+      background-color: #21ba45 !important;
+      color: white !important;
+    }
+    .certificate {
+      display: none;
+      border: 10px solid #21ba45;
+      padding: 20px;
+      margin-top: 30px;
+      text-align: center;
+    }
+    .seal {
+      width: 80px;
+      height: 80px;
+      background-color: #21ba45;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin: 20px auto;
+    }
+    .signature {
+      font-family: 'Brush Script MT', cursive;
+      font-size: 24px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="main-container">
+  <div class="ui top attached header-segment segment">
+    <h1 class="ui center aligned header">Sustainability Quiz</h1>
+    <p class="ui center aligned">Lets check if you know how to take care of our environment!</p>
+  </div>
+
+  <div class="ui attached segment">
+    <div class="ui indicating progress" id="quiz-progress">
+      <div class="bar"></div>
+      <div class="label">Progress</div>
+    </div>
+
+    <div id="quiz-form" class="ui form">
+      <div class="question field">
+        <label><h3>1. Which of these should you do to save water?</h3></label>
+        <div class="ui radio checkbox">
+          <input type="radio" name="q1" value="a">
+          <label>Leave the water running while brushing your teeth</label>
+        </div>
+        <div class="ui radio checkbox">
+          <input type="radio" name="q1" value="b">
+          <label>Turn off the tap when not using water</label>
+        </div>
+        <div class="ui radio checkbox">
+          <input type="radio" name="q1" value="c">
+          <label>Take very long showers</label>
+        </div>
+      </div>
+
+      <div class="question field">
+        <label><h3>2. What can you do with empty plastic bottles?</h3></label>
+        <div class="ui radio checkbox">
+          <input type="radio" name="q2" value="a">
+          <label>Throw them in the regular trash</label>
+        </div>
+        <div class="ui radio checkbox">
+          <input type="radio" name="q2" value="b">
+          <label>Recycle them</label>
+        </div>
+        <div class="ui radio checkbox">
+          <input type="radio" name="q2" value="c">
+          <label>Bury them in the yard</label>
+        </div>
+      </div>
+
+      <div class="question field">
+        <label><h3>3. How does planting trees help our planet?</h3></label>
+        <div class="ui radio checkbox">
+          <input type="radio" name="q3" value="a">
+          <label>Trees make the air cleaner by taking in carbon dioxide</label>
+        </div>
+        <div class="ui radio checkbox">
+          <input type="radio" name="q3" value="b">
+          <label>Trees make the planet hotter</label>
+        </div>
+        <div class="ui radio checkbox">
+          <input type="radio" name="q3" value="c">
+          <label>Trees use up all the water</label>
+        </div>
+      </div>
+
+      <div class="question field">
+        <label><h3>4. What is renewable energy?</h3></label>
+        <div class="ui radio checkbox">
+          <input type="radio" name="q4" value="a">
+          <label>Energy that comes from fossil fuels</label>
+        </div>
+        <div class="ui radio checkbox">
+          <input type="radio" name="q4" value="b">
+          <label>Energy that can be used over and over, like solar and wind power</label>
+        </div>
+        <div class="ui radio checkbox">
+          <input type="radio" name="q4" value="c">
+          <label>Energy that only works at night</label>
+        </div>
+      </div>
+
+      <div class="question field">
+        <label><h3>5. What is the best way to travel that helps the environment?</h3></label>
+        <div class="ui radio checkbox">
+          <input type="radio" name="q5" value="a">
+          <label>Riding in a car by yourself</label>
+        </div>
+        <div class="ui radio checkbox">
+          <input type="radio" name="q5" value="b">
+          <label>Taking a helicopter</label>
+        </div>
+        <div class="ui radio checkbox">
+          <input type="radio" name="q5" value="c">
+          <label>Walking, biking, or taking the bus</label>
+        </div>
+      </div>
+
+      <div class="ui center aligned container" style="margin-top: 30px;">
+        <button id="submit-button" class="ui large green button">Check My Answers</button>
+      </div>
+    </div>
+
+    <div id="result-message" class="ui hidden message"></div>
+
+    <div id="certificate" class="certificate">
+      <h2 class="ui green header">Certificate of Achievement</h2>
+      <div class="seal">✓</div>
+      <h3>This certifies that</h3>
+      <p><span id="user-name" style="font-size: 24px; font-weight: bold;">Planet Protector</span></p>
+      <p>has learned important facts about</p>
+      <h3 class="ui green header">Saving Our Planet</h3>
+      <p>by getting all answers correct on our Earth Quiz!</p>
+      <p>Date: <span id="cert-date"></span></p>
+      <div class="signature">Earth Friend</div>
+      <div class="ui buttons" style="margin-top: 20px;">
+        <button class="ui green button" id="print-button">Print Certificate</button>
+        <button class="ui button" id="restart-button">Take Quiz Again</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    // Initialize Semantic UI components
+    $('.ui.checkbox').checkbox();
+    $('#quiz-progress').progress({
+      total: 5,
+      value: 0
+    });
+
+    // Correct answers
+    const correctAnswers = {
+      q1: "b",  // Turn off the tap when not using water
+      q2: "b",  // Recycle them
+      q3: "a",  // Trees make the air cleaner by taking in carbon dioxide
+      q4: "b",  // Energy that can be used over and over, like solar and wind power
+      q5: "c"   // Walking, biking, or taking the bus
+    };
+
+    // Update progress when a radio button is clicked
+    $('input[type=radio]').change(updateProgress);
+
+    function updateProgress() {
+      let answeredQuestions = 0;
+
+      // Count answered questions
+      for (let i = 1; i <= 5; i++) {
+        if ($(`input[name="q${i}"]:checked`).length > 0) {
+          answeredQuestions++;
+        }
+      }
+
+      // Update progress bar
+      $('#quiz-progress').progress('set progress', answeredQuestions);
+    }
+
+    // Submit button event
+    $('#submit-button').on('click', function() {
+      let score = 0;
+      let unanswered = [];
+
+      // Check each question
+      for (let i = 1; i <= 5; i++) {
+        const answer = $(`input[name="q${i}"]:checked`).val();
+
+        if (answer == null) {
+          // Do something if unanswered (like increase a counter)
+        } else {
+          if (answer === correctAnswers[`q${i}`]) {
+            score = score + 1;
+          }
+        }
+      }
+
+
+
+      const resultDiv = $('#result-message');
+// # Find the element with id="result-message"
+
+      resultDiv.removeClass('hidden positive negative');
+// # Remove the classes "hidden", "positive", and "negative" from that element
+
+
+
+      if (unanswered.length > 0) {
+        resultDiv.addClass('negative');
+        resultDiv.html(`<div class="header">Please answer all questions</div><p>You're missing questions: ${unanswered.join(', ')}</p>`);
+        return;
+      }
+
+      if (score === 5) {
+        resultDiv.addClass('positive');
+        resultDiv.html(`<div class="header">Great job!</div><p>You got all ${score} questions right! You've earned a certificate!</p>`);
+
+        // Show certificate
+        $('#certificate').show();
+
+        // Set certificate date
+        const today = new Date();
+// Get today's date
+
+        document.getElementById('cert-date').textContent = today.toLocaleDateString();
+// Set the text of the element with id="cert-date" to today's date
+
+
+        // Prompt for name if perfect score
+        setTimeout(function() {
+          const name = prompt("What's your name for the certificate?", "");
+          if (name !== null && name !== "") {
+            document.getElementById('user-name').textContent = name;
+          }
+        }, 500);
+
+
+        // Scroll to certificate
+        $('html, body').animate({
+          scrollTop: $("#certificate").offset().top
+        }, 1000);
+      } else {
+        resultDiv.addClass('negative');
+        resultDiv.html(`<div class="header">Almost there!</div><p>You got ${score} out of 5 questions right. Try again to earn your certificate!</p>`);
+      }
+    });
+
+    // Print button
+    $('#print-button').on('click', function() {
+      window.print();
+    });
+
+    // Restart button
+    $('#restart-button').on('click', function() {
+      location.reload();
+    });
+  });
+</script>
+</body>
+</html>
